@@ -17,6 +17,7 @@
 
 extern unsigned long totalram_pages;
 
+s32 sunxi_get_fb_addr_para(struct __fb_addr_para *fb_addr_para);
 
 //extern void sunxi_get_fb_addr_para(struct __fb_addr_para *fb_addr_para);
 struct __fb_addr_para
@@ -759,9 +760,9 @@ int aw_mali_platform_device_register(void)
 	}
 #endif
 
-	//sunxi_get_fb_addr_para(&fb_addr_para);
-	mali_gpu_data.fb_start = g_fb_addr.fb_paddr;
-	mali_gpu_data.fb_size = g_fb_addr.fb_size;
+	sunxi_get_fb_addr_para(&fb_addr_para);
+	mali_gpu_data.fb_start = fb_addr_para.fb_paddr;
+	mali_gpu_data.fb_size = fb_addr_para.fb_size;
 	mali_gpu_data.shared_mem_size = totalram_pages * PAGE_SIZE; /* B */
 
 	err = platform_device_add_data(pdev, &mali_gpu_data, sizeof(mali_gpu_data));
